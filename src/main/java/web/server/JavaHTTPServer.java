@@ -18,7 +18,7 @@ import java.util.StringTokenizer;
 
 public class JavaHTTPServer implements Runnable{ 
 	
-	static final File WEB_ROOT = new File("."); //path
+	static final File WEB_ROOT = new File("./src/main/resources"); //path
 	static final String DEFAULT_FILE = "index.html"; //pagina di default
 	static final String FILE_NOT_FOUND = "404.html"; //pagina di errore Client
 	static final String METHOD_NOT_SUPPORTED = "not_supported.html"; //pagina di errore del metodo (errore Server)
@@ -104,6 +104,10 @@ public class JavaHTTPServer implements Runnable{
 				//metodi utilizzabili GET o HEAD
 				if (fileRequested.endsWith("/")) {
 					fileRequested += DEFAULT_FILE; //aggiunge index.html all'url
+				}
+				else{
+					out.println("HTTP/1.1 301 FILE MOVED PERMANENTLY"); 
+					out.println("location: "+(fileRequested+= "/"));
 				}
 				
 				File file = new File(WEB_ROOT, fileRequested);
